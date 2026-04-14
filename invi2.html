@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body { 
+    background: #0f0a06; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    min-height: 100vh; 
+    margin: 0;
+    overflow-x: hidden;
+    cursor: pointer;
+  }
+
+  .invite-wrap {
+    max-width: 480px;
+    width: 95%;
+    padding: 20px 0;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .invite-card {
+    background: #1a120a;
+    border: 1px solid #c9a84c;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.9);
+    overflow: hidden;
+  }
+
+  /* FIXED VIDEO FRAME: Increased height and adjusted positioning */
+  .video-frame {
+    width: 100%;
+    height: 420px; /* Increased height to prevent cropping the head */
+    position: relative;
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+    overflow: hidden;
+    background: #000;
+  }
+
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 15%; /* Focuses slightly higher on the frame to show faces */
+    filter: sepia(10%) brightness(0.7) contrast(1.1);
+  }
+
+  .video-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(26,18,10,0) 60%, rgba(26,18,10,1) 100%);
+    pointer-events: none;
+  }
+
+  /* Decorative Corners */
+  .corner { position: absolute; width: 35px; height: 35px; z-index: 10; pointer-events: none; }
+  .corner svg { width: 100%; height: 100%; }
+  .c-tl { top: 15px; left: 15px; }
+  .c-tr { top: 15px; right: 15px; transform: scaleX(-1); }
+  .c-bl { bottom: 15px; left: 15px; transform: scaleY(-1); }
+  .c-br { bottom: 15px; right: 15px; transform: scale(-1); }
+
+  /* Content Styling */
+  .content {
+    padding: 30px 30px 50px;
+    text-align: center;
+    position: relative;
+    z-index: 5;
+  }
+
+  .golden-years {
+    font-family: 'Cinzel', serif;
+    color: #c9a84c;
+    font-size: 12px;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    display: block;
+    font-weight: 600;
+    /* High contrast text standing out */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.8); 
+  }
+
+  .fifty {
+    font-family: 'Cinzel', serif;
+    font-size: 90px;
+    line-height: 1;
+    margin: 5px 0;
+    color: #f5e8c0;
+    font-weight: 600;
+    /* Massive glow and shadow for maximum standout */
+    text-shadow: 0 0 20px rgba(0,0,0,1), 0 0 40px rgba(201,168,76,0.4);
+  }
+
+  .invite-text {
+    font-size: 21px;
+    line-height: 1.5;
+    margin: 15px 0 25px;
+    color: #ffffff; /* Brighter white/cream for readability */
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
+  }
+
+  .invite-text strong {
+    color: #c9a84c;
+    font-weight: 600;
+  }
+
+  .details-container {
+    border-top: 1px solid rgba(201,168,76,0.3);
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+    padding: 20px 0;
+    margin: 25px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    background: rgba(0,0,0,0.2);
+  }
+
+  .detail-item span {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    color: #c9a84c;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    font-weight: 600;
+  }
+
+  .detail-item p {
+    font-size: 18px;
+    color: #f5e8c0;
+    font-style: italic;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+  }
+
+  .rsvp-info {
+    font-family: 'Cinzel', serif;
+    font-size: 14px;
+    letter-spacing: 4px;
+    color: #c9a84c;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+  }
+</style>
+</head>
+<body onclick="startExperience()">
+
+<div class="invite-wrap">
+  <div class="invite-card">
+    
+    <div class="video-frame">
+      <video autoplay muted loop playsinline id="bgVideo">
+        <source src="https://github.com/katyshi-88/50thvideo/raw/refs/heads/main/Multi-Shot_Video_-_make_the_couple_look_at_each_other.mp4" type="video/mp4">
+      </video>
+      <div class="video-overlay"></div>
+    </div>
+
+    <div class="corner c-tl"><svg viewBox="0 0 48 48" fill="none"><path d="M4 44 L4 8 Q4 4 8 4 L44 4" stroke="#c9a84c" stroke-width="1.5"/></svg></div>
+    <div class="corner c-tr"><svg viewBox="0 0 48 48" fill="none"><path d="M4 44 L4 8 Q4 4 8 4 L44 4" stroke="#c9a84c" stroke-width="1.5"/></svg></div>
+    <div class="corner c-bl"><svg viewBox="0 0 48 48" fill="none"><path d="M4 44 L4 8 Q4 4 8 4 L44 4" stroke="#c9a84c" stroke-width="1.5"/></svg></div>
+    <div class="corner c-br"><svg viewBox="0 0 48 48" fill="none"><path d="M4 44 L4 8 Q4 4 8 4 L44 4" stroke="#c9a84c" stroke-width="1.5"/></svg></div>
+
+    <div class="content">
+      <span class="golden-years">Golden Anniversary</span>
+      
+      <h1 class="fifty">50</h1>
+      
+      <div class="invite-text">
+        Join us as we celebrate<br>
+        <strong>50 Years of Love & Devotion</strong>
+      </div>
+
+      <div class="details-container">
+        <div class="detail-item">
+          <span>Date</span>
+          <p>August 22, 2026</p>
+        </div>
+        <div class="detail-item">
+          <span>Venue</span>
+          <p>Bouganville Resort<br>Antipolo City</p>
+        </div>
+      </div>
+
+      <div class="rsvp-info">RSVP: 2 Seats Reserved</div>
+    </div>
+  </div>
+</div>
+
+<audio id="bgMusic" loop>
+  <source src="https://github.com/katyshi-88/50thvideo/raw/refs/heads/main/1st%20of%20may.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  let started = false;
+  function startExperience() {
+    if (!started) {
+      const audio = document.getElementById('bgMusic');
+      const video = document.getElementById('bgVideo');
+      
+      audio.play().catch(e => console.log("Audio play failed"));
+      video.play();
+      
+      started = true;
+    }
+  }
+</script>
+
+</body>
+</html>
